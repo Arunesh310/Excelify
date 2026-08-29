@@ -1,15 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import {
   AuthAlert,
-  AuthButton,
   GoogleIcon,
   SupabaseConfigNotice,
 } from "@/components/auth/AuthForm";
-import { signInWithGoogle } from "@/lib/auth/google";
 import { getSafeRedirectPath } from "@/lib/auth/redirect";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
@@ -18,13 +17,15 @@ export function LoginForm() {
   const redirectTo = getSafeRedirectPath(searchParams.get("redirect"));
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const configured = isSupabaseConfigured();
 
-  useEffect(() => {
-    setLoading(false);
+  const googleAuthHref =
+    redirectTo === "/app"
+      ? "/auth/google"
+      : `/auth/google?redirect=${encodeURIComponent(redirectTo)}`;
 
+  useEffect(() => {
     const authError = searchParams.get("error");
     if (authError === "auth_callback_failed") {
       const details = searchParams.get("details");
@@ -36,46 +37,30 @@ export function LoginForm() {
     }
   }, [searchParams]);
 
-  async function handleGoogleSignIn() {
-    setErrorMessage(null);
-
-    if (!configured) {
-      setErrorMessage("Authentication is not configured yet.");
-      return;
-    }
-
-    setLoading(true);
-
-    const timeoutId = window.setTimeout(() => {
-      setLoading(false);
-      setErrorMessage("Google Sign-In timed out. Please try again.");
-    }, 15000);
-
-    try {
-      const error = await signInWithGoogle(redirectTo);
-      window.clearTimeout(timeoutId);
-
-      if (error) {
-        setErrorMessage(error);
-        setLoading(false);
-      }
-    } catch {
-      window.clearTimeout(timeoutId);
-      setErrorMessage("Something went wrong. Please try again.");
-      setLoading(false);
-    }
-  }
-
   return (
     <div className="flex flex-col gap-4">
       {!configured && <SupabaseConfigNotice />}
 
       {errorMessage && <AuthAlert variant="error">{errorMessage}</AuthAlert>}
 
-      <AuthButton type="button" loading={loading} onClick={handleGoogleSignIn}>
-        <GoogleIcon />
-        Continue with Google
-      </AuthButton>
+      {configured ? (
+        <Link
+          href={googleAuthHref}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--color-primary)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+        >
+          <GoogleIcon />
+          Continue with Google
+        </Link>
+      ) : (
+        <button
+          type="button"
+          disabled
+          className="inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-lg bg-[var(--color-primary)] px-4 py-2.5 text-sm font-semibold text-white opacity-60"
+        >
+          <GoogleIcon />
+          Continue with Google
+        </button>
+      )}
 
       <p className="text-center text-sm text-[var(--color-text-muted)]">
         Sign in with your Google account to access Excelify.
