@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { ExcelifyLogo } from "@/components/brand/ExcelifyLogo";
+import { UserMenu } from "@/components/auth/UserMenu";
 
 import {
   DASHBOARD_NAV,
@@ -128,26 +129,35 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
                 <ExcelifyLogo href="/" variant="icon" />
               </div>
 
-              <button
-                type="button"
-                className="ml-auto inline-flex items-center justify-center rounded-lg border border-slate-200 p-2 text-slate-700 md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-                aria-expanded={mobileMenuOpen}
-                aria-controls="app-mobile-menu"
-                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-                onClick={() => setMobileMenuOpen((open) => !open)}
-              >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  {mobileMenuOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  )}
-                </svg>
-              </button>
+              <div className="ml-auto flex items-center gap-3">
+                <div className="hidden md:block">
+                  <UserMenu />
+                </div>
+
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 p-2 text-slate-700 md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="app-mobile-menu"
+                  aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                  onClick={() => setMobileMenuOpen((open) => !open)}
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    {mobileMenuOpen ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    )}
+                  </svg>
+                </button>
+              </div>
             </div>
 
             {mobileMenuOpen && (
               <div id="app-mobile-menu" className="mt-4 border-t border-slate-200 pt-4 md:hidden">
+                <div className="mb-4 px-2">
+                  <UserMenu />
+                </div>
                 <SidebarNav pathname={pathname} onNavigate={closeMobileMenu} />
               </div>
             )}

@@ -7,9 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate:logo": "node scripts/generate-logo.mjs"
+    "generate:logo": "node scripts/generate-logo.mjs",
+    "setup:supabase": "node scripts/setup-supabase.mjs",
+    "setup:google": "node scripts/setup-google-oauth.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.5",
+    "@supabase/supabase-js": "^2.112.4",
     "next": "^15.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -24,6 +28,7 @@
     "eslint": "^9.33.0",
     "eslint-config-next": "^15.5.0",
     "sharp": "^0.35.4",
+    "supabase": "^2.116.0",
     "tailwindcss": "^4.1.12",
     "to-ico": "^1.1.5",
     "typescript": "^5.9.2"
