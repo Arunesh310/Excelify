@@ -74,6 +74,8 @@ export function createPageMetadata({
   description: string;
   path: string;
 }): Metadata {
+  const socialTitle = path === "/" ? title : `${title} | ${SITE_NAME}`;
+
   return {
     title,
     description,
@@ -81,7 +83,7 @@ export function createPageMetadata({
       canonical: `${SITE_URL}${path}`,
     },
     openGraph: {
-      title: `${title} | ${SITE_NAME}`,
+      title: socialTitle,
       description,
       url: `${SITE_URL}${path}`,
       siteName: SITE_NAME,
@@ -90,7 +92,7 @@ export function createPageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | ${SITE_NAME}`,
+      title: socialTitle,
       description,
     },
   };

@@ -1,12 +1,20 @@
 const FOOTER_LINKS = {
+  Tools: [
+    { label: "All Tools", href: "/tools" },
+    { label: "Clean Data", href: "/tools/excel-cleaner" },
+    { label: "Compare Files", href: "/tools/excel-compare" },
+    { label: "Match & Bring Data", href: "/tools/excel-match" },
+  ],
+  Solutions: [
+    { label: "Compare Two Excel Files", href: "/solutions/compare-two-excel-files" },
+    { label: "XLOOKUP Between Two Files", href: "/solutions/xlookup-between-two-files" },
+    { label: "Remove Duplicates from Excel", href: "/solutions/remove-duplicates-excel" },
+  ],
   Product: [
     { label: "Features", href: "#features" },
     { label: "Pricing", href: "#pricing" },
     { label: "FAQ", href: "#faq" },
-  ],
-  Company: [
-    { label: "About", href: "#" },
-    { label: "Contact", href: "#" },
+    { label: "Open App", href: "/app" },
   ],
   Legal: [
     { label: "Privacy", href: "#" },
@@ -18,7 +26,7 @@ export function Footer() {
   return (
     <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-12">
       <div className="mx-auto max-w-6xl">
-        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]">
           <div>
             <p className="text-lg font-bold text-[var(--color-text)]">Excelify</p>
             <p className="mt-2 text-sm text-[var(--color-text-muted)]">

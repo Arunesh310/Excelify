@@ -5,9 +5,9 @@ import { StructuredData } from "@/components/seo/StructuredData";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Excelify — Clean Excel & CSV Files Online",
+  title: "Excelify — Simple Excel & CSV Productivity Tools",
   description:
-    "Excelify helps you clean Excel and CSV files in seconds. Remove duplicates, blank rows, and messy spaces online — free, private, browser-based spreadsheet tools for business teams.",
+    "Simple online tools to clean, compare and work with Excel and CSV files without complicated formulas.",
   path: "/",
 });
 
