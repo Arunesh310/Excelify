@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Upload & Preview", description: "View workbook data" },
-  { href: "/clean", label: "Clean Data", description: "Clean messy spreadsheets" },
+  { href: "/app", label: "Upload & Preview", description: "View workbook data" },
+  { href: "/app/clean", label: "Clean Data", description: "Clean messy spreadsheets" },
 ] as const;
 
 interface AppShellProps {
@@ -22,7 +22,7 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
       <div className="mx-auto flex min-h-screen max-w-7xl">
         <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white/80 px-4 py-8 md:block">
           <div className="mb-8 px-2">
-            <Link href="/" className="text-xl font-bold text-slate-900">
+            <Link href="/app" className="text-xl font-bold text-slate-900">
               Excelify
             </Link>
             <p className="mt-1 text-xs text-slate-500">Work smarter with Excel.</p>
@@ -53,7 +53,7 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="border-b border-slate-200 bg-white/80 px-6 py-8 backdrop-blur">
             <div className="md:hidden">
-              <Link href="/" className="text-sm font-semibold text-emerald-700">
+              <Link href="/app" className="text-sm font-semibold text-emerald-700">
                 Excelify
               </Link>
             </div>

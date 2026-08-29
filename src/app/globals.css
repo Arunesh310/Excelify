@@ -1,12 +1,81 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --color-primary: #0d8f6a;
+  --color-primary-hover: #0a7558;
+  --color-primary-light: #e8f7f1;
+  --color-primary-muted: #b8e4d3;
+  --color-background: #fafbfc;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4f6f8;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+  --color-text-subtle: #94a3b8;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.1);
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.landing-animate {
+  animation: landing-fade-up 0.7s ease-out both;
+}
+
+.landing-animate-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.landing-animate-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.landing-animate-delay-3 {
+  animation-delay: 0.3s;
+}
+
+@keyframes landing-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-animate,
+  .landing-animate-delay-1,
+  .landing-animate-delay-2,
+  .landing-animate-delay-3 {
+    animation: none;
+  }
 }
