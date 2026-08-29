@@ -13,7 +13,7 @@ const URLS = [
   `${SITE_URL}/app/clean`,
 ];
 
-async function submitIndexNow(): Promise<void> {
+async function submitIndexNow() {
   const response = await fetch("https://api.indexnow.org/indexnow", {
     method: "POST",
     headers: { "Content-Type": "application/json; charset=utf-8" },

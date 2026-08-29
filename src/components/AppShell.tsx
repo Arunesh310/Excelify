@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import { ExcelifyLogo } from "@/components/brand/ExcelifyLogo";
+
 import {
   DASHBOARD_NAV,
   HISTORY_NAV,
@@ -104,13 +106,8 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
       <div className="mx-auto flex min-h-screen max-w-7xl">
         <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white/80 px-4 py-8 md:block">
           <div className="mb-8 px-2">
-            <Link
-              href="/app"
-              className="text-xl font-bold text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-            >
-              Excelify
-            </Link>
-            <p className="mt-1 text-xs text-slate-500">Work smarter with Excel.</p>
+            <ExcelifyLogo href="/app" priority />
+            <p className="mt-2 text-xs text-slate-500">Work smarter with Excel.</p>
           </div>
 
           <SidebarNav pathname={pathname} />
@@ -120,12 +117,7 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
           <header className="border-b border-slate-200 bg-white/80 px-6 py-6 backdrop-blur md:py-8">
             <div className="flex items-center justify-between gap-4">
               <div className="md:hidden">
-                <Link
-                  href="/app"
-                  className="text-sm font-semibold text-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-                >
-                  Excelify
-                </Link>
+                <ExcelifyLogo href="/app" variant="icon" />
               </div>
 
               <button

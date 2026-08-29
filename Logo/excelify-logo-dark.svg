@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" fill="none" role="img" aria-label="Excelify">
+  <title>Excelify</title>
+  <rect x="4" y="12" width="40" height="40" rx="10" fill="#0D8F6A"/>
+  <rect x="13" y="21" width="9" height="9" rx="1.5" fill="white" fill-opacity="0.95"/>
+  <rect x="26" y="21" width="9" height="9" rx="1.5" fill="white" fill-opacity="0.95"/>
+  <rect x="13" y="34" width="9" height="9" rx="1.5" fill="white" fill-opacity="0.75"/>
+  <rect x="26" y="34" width="9" height="9" rx="1.5" fill="white" fill-opacity="0.75"/>
+  <text x="58" y="43" font-family="Inter, Segoe UI, system-ui, sans-serif" font-size="34" font-weight="700" letter-spacing="-0.5">
+    <tspan fill="#FFFFFF">Excel</tspan><tspan fill="#6EE7B7">ify</tspan>
+  </text>
+</svg>

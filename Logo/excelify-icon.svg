@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="Excelify icon">
+  <title>Excelify</title>
+  <rect width="64" height="64" rx="16" fill="#0D8F6A"/>
+  <rect x="16" y="16" width="14" height="14" rx="3" fill="white" fill-opacity="0.95"/>
+  <rect x="34" y="16" width="14" height="14" rx="3" fill="white" fill-opacity="0.95"/>
+  <rect x="16" y="34" width="14" height="14" rx="3" fill="white" fill-opacity="0.75"/>
+  <rect x="34" y="34" width="14" height="14" rx="3" fill="white" fill-opacity="0.75"/>
+</svg>
