@@ -138,8 +138,8 @@ async function configureAuth(token) {
 
   await managementFetch(`/projects/${PROJECT_REF}/config/auth`, token, {
     method: "PATCH",
-    body: JSON.stringify({
-      SITE_URL: "http://localhost:3000",
+      body: JSON.stringify({
+      SITE_URL: "https://excelify.co.in",
       URI_ALLOW_LIST: redirectUrls.join(","),
     }),
   });

@@ -13,10 +13,6 @@ export async function signInWithGoogle(redirectTo: string): Promise<string | nul
     provider: "google",
     options: {
       redirectTo: callbackUrl.toString(),
-      queryParams: {
-        access_type: "offline",
-        prompt: "consent",
-      },
     },
   });
 
