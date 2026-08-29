@@ -106,7 +106,7 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
       <div className="mx-auto flex min-h-screen max-w-7xl">
         <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white/80 px-4 py-8 md:block">
           <div className="mb-8 px-2">
-            <ExcelifyLogo href="/app" priority />
+            <ExcelifyLogo href="/" priority />
             <p className="mt-2 text-xs text-slate-500">Work smarter with Excel.</p>
           </div>
 
@@ -117,7 +117,7 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
           <header className="border-b border-slate-200 bg-white/80 px-6 py-6 backdrop-blur md:py-8">
             <div className="flex items-center justify-between gap-4">
               <div className="md:hidden">
-                <ExcelifyLogo href="/app" variant="icon" />
+                <ExcelifyLogo href="/" variant="icon" />
               </div>
 
               <button
