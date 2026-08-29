@@ -15,6 +15,7 @@ function formatCellForExport(value: CellValue): string | number {
 export function exportWorksheetToXlsx(
   worksheet: WorksheetData,
   fileName: string = DEFAULT_FILENAME,
+  sheetName: string = "Cleaned Data",
 ): void {
   const aoa: (string | number)[][] = [
     worksheet.headers,
@@ -23,7 +24,7 @@ export function exportWorksheetToXlsx(
 
   const ws = XLSX.utils.aoa_to_sheet(aoa);
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Cleaned Data");
+  XLSX.utils.book_append_sheet(wb, ws, sheetName);
 
   XLSX.writeFile(wb, fileName);
 }

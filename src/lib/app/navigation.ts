@@ -25,7 +25,6 @@ export const TOOL_NAV_ITEMS: AppNavItem[] = [
     href: "/app/compare",
     label: "Compare Files",
     description: "Find matched and missing records",
-    comingSoon: true,
   },
   {
     href: "/app/match",

@@ -10,18 +10,19 @@ interface ToolCardProps {
 function ToolCard({ title, description, status, href }: ToolCardProps) {
   const isAvailable = status === "available";
 
+  const badge =
+    status === "available"
+      ? { text: "Available", className: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200" }
+      : { text: "Coming Soon", className: "bg-slate-100 text-slate-600" };
+
   return (
     <article className="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
         <span
-          className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            isAvailable
-              ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200"
-              : "bg-slate-100 text-slate-600"
-          }`}
+          className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${badge.className}`}
         >
-          {isAvailable ? "Available" : "Coming Soon"}
+          {badge.text}
         </span>
       </div>
 
@@ -84,7 +85,8 @@ export function AppDashboard() {
         <ToolCard
           title="Compare Files"
           description="Compare two spreadsheets and quickly find matched and missing records."
-          status="coming-soon"
+          status="available"
+          href="/app/compare"
         />
         <ToolCard
           title="Match Columns"
