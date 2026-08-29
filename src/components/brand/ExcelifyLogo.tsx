@@ -38,11 +38,11 @@ export function ExcelifyLogo({
   }
 
   return (
-    <Link
-      href={href}
-      className="inline-flex items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
-      aria-label="Excelify home"
-    >
+        <Link
+          href={href}
+          className="inline-flex items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+          aria-label="Go to Excelify homepage"
+        >
       {image}
     </Link>
   );

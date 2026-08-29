@@ -106,8 +106,16 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
       <div className="mx-auto flex min-h-screen max-w-7xl">
         <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white/80 px-4 py-8 md:block">
           <div className="mb-8 px-2">
-            <ExcelifyLogo href="/" priority />
-            <p className="mt-2 text-xs text-slate-500">Work smarter with Excel.</p>
+            <Link
+              href="/"
+              className="group inline-flex flex-col focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              aria-label="Go to Excelify homepage"
+            >
+              <ExcelifyLogo href="" variant="full" priority />
+              <p className="mt-2 text-xs text-slate-500 transition group-hover:text-slate-700">
+                Work smarter with Excel.
+              </p>
+            </Link>
           </div>
 
           <SidebarNav pathname={pathname} />
