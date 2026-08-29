@@ -123,9 +123,9 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
         <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white/80 px-4 py-6 md:block">
           <div className="mb-8 px-2">
             <Link
-              href="/app"
+              href="/"
               className="group inline-flex flex-col focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-              aria-label="Go to Excelify home"
+              aria-label="Go to Excelify homepage"
             >
               <ExcelifyLogo href="" variant="full" priority />
               <p className="mt-2 text-xs text-slate-500 transition group-hover:text-slate-700">
@@ -140,14 +140,18 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="border-b border-slate-200 bg-white/80 px-4 py-4 backdrop-blur sm:px-6">
             <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3 md:hidden">
-                <ExcelifyLogo href="/app" variant="icon" />
+              <Link
+                href="/"
+                className="flex items-center gap-3 md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                aria-label="Go to Excelify homepage"
+              >
+                <ExcelifyLogo href="" variant="icon" />
                 <span className="text-sm font-semibold text-slate-900">Excelify</span>
-              </div>
+              </Link>
 
               <div className="hidden md:block">
                 <Link
-                  href="/app"
+                  href="/"
                   className="text-sm font-semibold text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                 >
                   Excelify
@@ -206,7 +210,7 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
                 className="fixed inset-y-0 left-0 z-50 w-72 border-r border-slate-200 bg-white p-4 shadow-xl md:hidden"
               >
                 <div className="mb-6 flex items-center justify-between">
-                  <ExcelifyLogo href="/app" variant="full" />
+                  <ExcelifyLogo href="/" variant="full" />
                   <button
                     type="button"
                     className="rounded-lg border border-slate-200 p-2 text-slate-700"
