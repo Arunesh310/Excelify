@@ -28,33 +28,143 @@ function normalizeCellValue(value: unknown): string {
   return String(value).trim();
 }
 
-function detectHeaders(firstRow: string[], secondRow: string[]): string[] {
-  const firstRowHasValues = firstRow.some((cell) => cell.length > 0);
-  const secondRowHasValues = secondRow.some((cell) => cell.length > 0);
-
-  if (!firstRowHasValues) {
-    return firstRow.map((_, index) => `Column ${index + 1}`);
+function looksNumeric(value: string): boolean {
+  if (!value) {
+    return false;
   }
 
-  if (!secondRowHasValues) {
-    return firstRow.map((cell, index) => cell || `Column ${index + 1}`);
+  const normalized = value.replace(/,/g, "").trim();
+  return normalized.length > 0 && !Number.isNaN(Number(normalized));
+}
+
+function scoreHeaderCandidate(row: string[]): number {
+  const cells = row.filter((cell) => cell.length > 0);
+
+  if (cells.length === 0) {
+    return 0;
   }
 
-  return firstRow.map((cell, index) => cell || `Column ${index + 1}`);
+  const textCells = cells.filter((cell) => !looksNumeric(cell)).length;
+  const numericCells = cells.length - textCells;
+
+  if (textCells === 0) {
+    return 0;
+  }
+
+  return textCells * 3 - numericCells * 2 + cells.length * 0.1;
+}
+
+function findHeaderRowIndex(matrix: string[][], maxScan = 10): number {
+  const limit = Math.min(maxScan, matrix.length);
+  let bestIndex = 0;
+  let bestScore = -1;
+
+  for (let rowIndex = 0; rowIndex < limit; rowIndex += 1) {
+    const score = scoreHeaderCandidate(matrix[rowIndex] ?? []);
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestIndex = rowIndex;
+    }
+  }
+
+  return bestIndex;
+}
+
+function getWorksheetDimensions(worksheet: XLSX.WorkSheet): { rowCount: number; columnCount: number } {
+  const ref = worksheet["!ref"];
+
+  if (!ref) {
+    return { rowCount: 0, columnCount: 0 };
+  }
+
+  const range = XLSX.utils.decode_range(ref);
+
+  return {
+    rowCount: range.e.r - range.s.r + 1,
+    columnCount: range.e.c - range.s.c + 1,
+  };
+}
+
+function readWorksheetMatrix(worksheet: XLSX.WorkSheet): string[][] {
+  const { rowCount, columnCount } = getWorksheetDimensions(worksheet);
+
+  if (rowCount === 0 || columnCount === 0) {
+    return [];
+  }
+
+  const matrix: string[][] = [];
+
+  for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+    const row: string[] = [];
+
+    for (let columnIndex = 0; columnIndex < columnCount; columnIndex += 1) {
+      const cellAddress = XLSX.utils.encode_cell({ r: rowIndex, c: columnIndex });
+      const cell = worksheet[cellAddress];
+      const value = cell?.w ?? cell?.v ?? "";
+      row.push(normalizeCellValue(value));
+    }
+
+    matrix.push(row);
+  }
+
+  return matrix;
+}
+
+function resolveHeaderName(
+  matrix: string[][],
+  columnIndex: number,
+  headerRowIndex: number,
+  scanLimit: number,
+): string {
+  const direct = matrix[headerRowIndex]?.[columnIndex] ?? "";
+
+  if (direct.length > 0) {
+    return direct;
+  }
+
+  for (let rowIndex = 0; rowIndex < scanLimit; rowIndex += 1) {
+    if (rowIndex === headerRowIndex) {
+      continue;
+    }
+
+    const candidate = matrix[rowIndex]?.[columnIndex] ?? "";
+
+    if (candidate.length > 0 && !looksNumeric(candidate)) {
+      return candidate;
+    }
+  }
+
+  return `Column ${columnIndex + 1}`;
+}
+
+function buildHeaders(matrix: string[][], headerRowIndex: number): string[] {
+  const columnCount = matrix[headerRowIndex]?.length ?? 0;
+  const scanLimit = Math.min(10, matrix.length);
+  const headers = Array.from({ length: columnCount }, (_, columnIndex) =>
+    resolveHeaderName(matrix, columnIndex, headerRowIndex, scanLimit),
+  );
+
+  return makeUniqueHeaders(headers);
+}
+
+function makeUniqueHeaders(headers: string[]): string[] {
+  const seen = new Map<string, number>();
+
+  return headers.map((header) => {
+    const count = seen.get(header) ?? 0;
+    seen.set(header, count + 1);
+
+    if (count === 0) {
+      return header;
+    }
+
+    return `${header} (${count + 1})`;
+  });
 }
 
 function sheetToMatrix(worksheet: XLSX.WorkSheet): string[][] {
-  const matrix = XLSX.utils.sheet_to_json<(string | number | boolean | Date | null)[]>(
-    worksheet,
-    {
-      header: 1,
-      raw: false,
-      defval: "",
-      blankrows: false,
-    },
-  );
-
-  return matrix.map((row) => row.map((cell) => normalizeCellValue(cell)));
+  return readWorksheetMatrix(worksheet);
 }
 
 function parseSheet(worksheet: XLSX.WorkSheet, sheetName: string): ParsedSheet | null {
@@ -64,19 +174,20 @@ function parseSheet(worksheet: XLSX.WorkSheet, sheetName: string): ParsedSheet |
     return null;
   }
 
-  const firstRow = matrix[0] ?? [];
-  const secondRow = matrix[1] ?? [];
-  const headers = detectHeaders(firstRow, secondRow);
-  const dataRows = matrix.slice(1);
-  const columnCount = Math.max(headers.length, ...matrix.map((row) => row.length), 0);
+  const headerRowIndex = findHeaderRowIndex(matrix);
+  const headers = buildHeaders(matrix, headerRowIndex);
+  const dataRows = matrix.slice(headerRowIndex + 1);
+  const columnCount = headers.length;
 
-  const normalizedRows = dataRows.map((row) => {
-    const nextRow = [...row];
-    while (nextRow.length < columnCount) {
-      nextRow.push("");
-    }
-    return nextRow.slice(0, columnCount);
-  });
+  const normalizedRows = dataRows
+    .map((row) => {
+      const nextRow = [...row];
+      while (nextRow.length < columnCount) {
+        nextRow.push("");
+      }
+      return nextRow.slice(0, columnCount);
+    })
+    .filter((row) => row.some((cell) => cell.length > 0));
 
   if (normalizedRows.length === 0 && headers.every((header) => header.startsWith("Column "))) {
     return null;
@@ -84,7 +195,7 @@ function parseSheet(worksheet: XLSX.WorkSheet, sheetName: string): ParsedSheet |
 
   return {
     name: sheetName,
-    headers: headers.slice(0, columnCount),
+    headers,
     rows: normalizedRows,
     rowCount: normalizedRows.length,
     columnCount,

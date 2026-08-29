@@ -1,8 +1,11 @@
+import { MATCH_BRING_DATA_ENABLED } from "./feature-flags";
+
 export interface AppNavItem {
   href: string;
   label: string;
   description?: string;
   comingSoon?: boolean;
+  devOnly?: boolean;
 }
 
 export const DASHBOARD_NAV: AppNavItem = {
@@ -28,9 +31,10 @@ export const TOOL_NAV_ITEMS: AppNavItem[] = [
   },
   {
     href: "/app/match",
-    label: "Match Columns",
-    description: "Map column names between files",
-    comingSoon: true,
+    label: "Match & Bring Data",
+    description: "Bring lookup columns into your base file",
+    comingSoon: !MATCH_BRING_DATA_ENABLED,
+    devOnly: MATCH_BRING_DATA_ENABLED,
   },
   {
     href: "/app/ageing",

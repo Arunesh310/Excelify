@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { MATCH_BRING_DATA_ENABLED } from "@/lib/app/feature-flags";
+
 interface ToolCardProps {
   title: string;
   description: string;
@@ -89,9 +91,10 @@ export function AppDashboard() {
           href="/app/compare"
         />
         <ToolCard
-          title="Match Columns"
-          description="Map differently named columns between spreadsheets."
-          status="coming-soon"
+          title="Match & Bring Data"
+          description="Match two spreadsheets and bring selected columns from one into the other."
+          status={MATCH_BRING_DATA_ENABLED ? "available" : "coming-soon"}
+          href={MATCH_BRING_DATA_ENABLED ? "/app/match" : undefined}
         />
         <ToolCard
           title="Ageing"

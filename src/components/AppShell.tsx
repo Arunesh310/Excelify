@@ -48,6 +48,11 @@ function NavLink({
             Soon
           </span>
         )}
+        {item.devOnly && (
+          <span className="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-amber-800">
+            Dev
+          </span>
+        )}
       </div>
       {item.description && (
         <p className="text-xs text-slate-500">{item.description}</p>
