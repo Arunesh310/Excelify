@@ -5,18 +5,15 @@ import { AppDashboard } from "@/components/app/AppDashboard";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Excelify Tools Dashboard",
+  title: "Excelify Workspace",
   description:
-    "Choose an Excelify tool to upload, preview, clean, and work with Excel and CSV files in your browser.",
+    "Choose an Excelify tool to clean, compare, and work with Excel and CSV files in your browser.",
   path: "/app",
 });
 
 export default function AppDashboardPage() {
   return (
-    <AppShell
-      title="Excelify Tools"
-      subtitle="Choose a tool to work with your spreadsheet."
-    >
+    <AppShell>
       <AppDashboard />
     </AppShell>
   );
