@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 
 import { AppShell } from "@/components/AppShell";
-import { ExcelifyApp } from "@/components/ExcelifyApp";
+import { AppDashboard } from "@/components/app/AppDashboard";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Upload & Preview Excel Files",
+  title: "Excelify Tools Dashboard",
   description:
-    "Upload and preview Excel and CSV files in your browser. View sheets, rows, and columns instantly with Excelify — no upload to servers.",
+    "Choose an Excelify tool to upload, preview, clean, and work with Excel and CSV files in your browser.",
   path: "/app",
 });
 
-export default function AppPage() {
+export default function AppDashboardPage() {
   return (
-    <AppShell title="Excelify" subtitle="Work smarter with Excel.">
-      <ExcelifyApp />
+    <AppShell
+      title="Excelify Tools"
+      subtitle="Choose a tool to work with your spreadsheet."
+    >
+      <AppDashboard />
     </AppShell>
   );
 }

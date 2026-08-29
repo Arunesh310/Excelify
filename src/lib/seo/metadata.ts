@@ -47,6 +47,9 @@ export const defaultMetadata: Metadata = {
   },
   category: "technology",
   applicationName: SITE_NAME,
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
   other: {
     "apple-mobile-web-app-title": SITE_NAME,
     "application-name": SITE_NAME,
