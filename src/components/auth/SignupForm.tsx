@@ -138,13 +138,21 @@ export function SignupForm() {
 
     setGoogleLoading(true);
 
+    const timeoutId = window.setTimeout(() => {
+      setGoogleLoading(false);
+      setErrorMessage("Google Sign-In timed out. Please try again.");
+    }, 15000);
+
     try {
       const error = await signInWithGoogle(redirectTo);
+      window.clearTimeout(timeoutId);
+
       if (error) {
         setErrorMessage(error);
         setGoogleLoading(false);
       }
     } catch {
+      window.clearTimeout(timeoutId);
       setErrorMessage("Something went wrong. Please try again.");
       setGoogleLoading(false);
     }

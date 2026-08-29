@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   AuthAlert,
@@ -31,6 +31,20 @@ export function LoginForm() {
   const [googleLoading, setGoogleLoading] = useState(false);
 
   const configured = isSupabaseConfigured();
+
+  useEffect(() => {
+    setGoogleLoading(false);
+
+    const authError = searchParams.get("error");
+    if (authError === "auth_callback_failed") {
+      const details = searchParams.get("details");
+      setErrorMessage(
+        details
+          ? `Google Sign-In failed: ${details}`
+          : "Google Sign-In could not be completed. Please try again.",
+      );
+    }
+  }, [searchParams]);
 
   function validate(): boolean {
     const errors: { email?: string; password?: string } = {};
@@ -95,13 +109,21 @@ export function LoginForm() {
 
     setGoogleLoading(true);
 
+    const timeoutId = window.setTimeout(() => {
+      setGoogleLoading(false);
+      setErrorMessage("Google Sign-In timed out. Please try again.");
+    }, 15000);
+
     try {
       const error = await signInWithGoogle(redirectTo);
+      window.clearTimeout(timeoutId);
+
       if (error) {
         setErrorMessage(error);
         setGoogleLoading(false);
       }
     } catch {
+      window.clearTimeout(timeoutId);
       setErrorMessage("Something went wrong. Please try again.");
       setGoogleLoading(false);
     }

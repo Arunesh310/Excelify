@@ -10,6 +10,12 @@ const PROJECT_REF = "vintehwihywdjqjtlpxi";
 const MANAGEMENT_API = "https://api.supabase.com/v1";
 
 const REDIRECT_URLS = [
+  "http://localhost:3000/**",
+  "http://localhost:3001/**",
+  "http://localhost:3002/**",
+  "http://localhost:3003/**",
+  "https://excelify.co.in/**",
+  "https://www.excelify.co.in/**",
   "http://localhost:3000/auth/callback",
   "http://localhost:3001/auth/callback",
   "http://localhost:3002/auth/callback",
