@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { ExcelifyLogo } from "@/components/brand/ExcelifyLogo";
-import { UserMenu } from "@/components/auth/UserMenu";
 
 import {
   DASHBOARD_NAV,
@@ -130,10 +129,6 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
               </div>
 
               <div className="ml-auto flex items-center gap-3">
-                <div className="hidden md:block">
-                  <UserMenu />
-                </div>
-
                 <button
                   type="button"
                   className="inline-flex items-center justify-center rounded-lg border border-slate-200 p-2 text-slate-700 md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
@@ -155,9 +150,6 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
 
             {mobileMenuOpen && (
               <div id="app-mobile-menu" className="mt-4 border-t border-slate-200 pt-4 md:hidden">
-                <div className="mb-4 px-2">
-                  <UserMenu />
-                </div>
                 <SidebarNav pathname={pathname} onNavigate={closeMobileMenu} />
               </div>
             )}

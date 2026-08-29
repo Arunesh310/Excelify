@@ -1,25 +1,9 @@
-import { redirect } from "next/navigation";
+import type { ReactNode } from "react";
 
-import { createClient } from "@/lib/supabase/server";
-import { isSupabaseConfigured } from "@/lib/supabase/config";
-
-export default async function AppLayout({
+export default function AppLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
-  if (!isSupabaseConfigured()) {
-    return children;
-  }
-
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
   return children;
 }

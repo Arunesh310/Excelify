@@ -48,12 +48,6 @@ export function Navbar({
 
         <div className="hidden items-center gap-3 md:flex">
           <Link
-            href="/login"
-            className="rounded-lg px-4 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
-          >
-            Sign in with Google
-          </Link>
-          <Link
             href="/app"
             className="rounded-lg bg-[var(--color-primary)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
           >
@@ -93,13 +87,6 @@ export function Navbar({
                 {link.label}
               </a>
             ))}
-            <Link
-              href="/login"
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-muted)] hover:bg-[var(--color-surface-muted)]"
-              onClick={onCloseMobileMenu}
-            >
-              Sign in with Google
-            </Link>
             <Link
               href="/app"
               className="mt-2 rounded-lg bg-[var(--color-primary)] px-3 py-2.5 text-center text-sm font-semibold text-white hover:bg-[var(--color-primary-hover)]"

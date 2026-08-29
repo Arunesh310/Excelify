@@ -9,19 +9,24 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/login",
+        destination: "/app",
+        permanent: false,
+      },
+      {
         source: "/signup",
-        destination: "/login",
-        permanent: true,
+        destination: "/app",
+        permanent: false,
       },
       {
         source: "/forgot-password",
-        destination: "/login",
-        permanent: true,
+        destination: "/app",
+        permanent: false,
       },
       {
-        source: "/auth/update-password",
-        destination: "/login",
-        permanent: true,
+        source: "/auth/:path*",
+        destination: "/app",
+        permanent: false,
       },
     ];
   },
