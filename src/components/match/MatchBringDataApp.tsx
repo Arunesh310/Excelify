@@ -264,10 +264,6 @@ export function MatchBringDataApp() {
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-      <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-        Development build only — Match &amp; Bring Data is not available in production yet.
-      </p>
-
       <p className="rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
         Your files are processed locally in your browser.
       </p>

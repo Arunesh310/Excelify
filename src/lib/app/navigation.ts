@@ -1,5 +1,3 @@
-import { MATCH_BRING_DATA_ENABLED } from "./feature-flags";
-
 export interface AppNavItem {
   href: string;
   label: string;
@@ -33,8 +31,6 @@ export const TOOL_NAV_ITEMS: AppNavItem[] = [
     href: "/app/match",
     label: "Match & Bring Data",
     description: "Bring lookup columns into your base file",
-    comingSoon: !MATCH_BRING_DATA_ENABLED,
-    devOnly: MATCH_BRING_DATA_ENABLED,
   },
   {
     href: "/app/ageing",
