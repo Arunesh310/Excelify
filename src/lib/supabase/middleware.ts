@@ -33,10 +33,7 @@ export async function updateSession(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
   const isProtectedRoute = pathname.startsWith("/app");
-  const isAuthRoute =
-    pathname === "/login" ||
-    pathname === "/signup" ||
-    pathname === "/forgot-password";
+  const isAuthRoute = pathname === "/login";
 
   if (isProtectedRoute && !user) {
     const redirectUrl = request.nextUrl.clone();

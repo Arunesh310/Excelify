@@ -8,6 +8,21 @@ const nextConfig: NextConfig = {
         destination: "/app/clean",
         permanent: true,
       },
+      {
+        source: "/signup",
+        destination: "/login",
+        permanent: true,
+      },
+      {
+        source: "/forgot-password",
+        destination: "/login",
+        permanent: true,
+      },
+      {
+        source: "/auth/update-password",
+        destination: "/login",
+        permanent: true,
+      },
     ];
   },
 };

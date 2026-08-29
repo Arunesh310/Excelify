@@ -1,37 +1,5 @@
 "use client";
 
-interface AuthInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  error?: string;
-}
-
-export function AuthInput({ label, error, id, ...props }: AuthInputProps) {
-  const inputId = id ?? label.toLowerCase().replace(/\s+/g, "-");
-
-  return (
-    <div>
-      <label
-        htmlFor={inputId}
-        className="block text-sm font-medium text-[var(--color-text)]"
-      >
-        {label}
-      </label>
-      <input
-        id={inputId}
-        className="mt-2 w-full rounded-lg border border-[var(--color-border-strong)] bg-white px-3 py-2.5 text-sm text-[var(--color-text)] outline-none ring-[var(--color-primary)] transition placeholder:text-[var(--color-text-subtle)] focus:ring-2 disabled:cursor-not-allowed disabled:opacity-60"
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${inputId}-error` : undefined}
-        {...props}
-      />
-      {error && (
-        <p id={`${inputId}-error`} className="mt-1.5 text-sm text-red-600" role="alert">
-          {error}
-        </p>
-      )}
-    </div>
-  );
-}
-
 interface AuthButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
   loading?: boolean;
@@ -67,21 +35,6 @@ export function AuthButton({
       )}
       {children}
     </button>
-  );
-}
-
-export function AuthDivider() {
-  return (
-    <div className="relative my-6">
-      <div className="absolute inset-0 flex items-center" aria-hidden="true">
-        <div className="w-full border-t border-[var(--color-border)]" />
-      </div>
-      <div className="relative flex justify-center text-xs uppercase">
-        <span className="bg-[var(--color-surface)] px-2 text-[var(--color-text-subtle)]">
-          or
-        </span>
-      </div>
-    </div>
   );
 }
 

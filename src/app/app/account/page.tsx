@@ -16,14 +16,6 @@ function formatDate(dateString: string): string {
   }).format(new Date(dateString));
 }
 
-function getAuthMethod(identities: { provider?: string }[] | undefined): string {
-  if (identities?.some((identity) => identity.provider === "google")) {
-    return "Google";
-  }
-
-  return "Email and password";
-}
-
 export default async function AccountPage() {
   const supabase = await createClient();
   const {
@@ -40,7 +32,7 @@ export default async function AccountPage() {
     "—";
   const email = profile?.email || user?.email || "—";
   const memberSince = profile?.created_at || user?.created_at || null;
-  const authMethod = getAuthMethod(user?.identities);
+  const authMethod = "Google";
 
   return (
     <AppShell
@@ -72,8 +64,7 @@ export default async function AccountPage() {
         </div>
 
         <p className="mt-6 text-sm text-slate-500">
-          Account settings such as password changes and connected accounts can be managed
-          here in a future update.
+          Your account is linked to Google Sign-In.
         </p>
       </div>
     </AppShell>
