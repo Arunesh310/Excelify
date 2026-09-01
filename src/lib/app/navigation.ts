@@ -25,6 +25,11 @@ export const SIDEBAR_TOOL_ITEMS: AppNavItem[] = [
     label: "Match & Bring",
     description: "Bring lookup columns into your base file",
   },
+  {
+    href: "/app/ageing",
+    label: "Ageing",
+    description: "Calculate days from a date column",
+  },
 ];
 
 export const ALL_TOOLS_NAV: AppNavItem = {

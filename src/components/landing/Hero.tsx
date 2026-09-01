@@ -80,8 +80,8 @@ export function Hero() {
             Work smarter with Excel.
           </h1>
           <p className="landing-animate landing-animate-delay-2 mt-6 max-w-xl text-lg leading-relaxed text-[var(--color-text-muted)]">
-            Clean, compare and transform Excel &amp; CSV files in seconds — without complicated
-            formulas.
+            Clean, compare and match Excel &amp; CSV files in your browser — no formulas, no
+            uploads.
           </p>
           <div className="landing-animate landing-animate-delay-3 mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -90,12 +90,12 @@ export function Hero() {
             >
               Try Excelify Free
             </Link>
-            <a
-              href="#how-it-works"
+            <Link
+              href="/tools"
               className="inline-flex items-center justify-center rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-6 py-3 text-sm font-semibold text-[var(--color-text)] transition hover:bg-[var(--color-surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
             >
-              See how it works
-            </a>
+              Browse tools
+            </Link>
           </div>
         </div>
 

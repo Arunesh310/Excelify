@@ -1,6 +1,7 @@
 "use client";
 
 import type { CleaningOptions, CleaningStats } from "@/lib/excel/cleaner-types";
+import { STANDARD_CLEANING_OPTIONS } from "@/lib/excel/cleaner-types";
 import { formatStatNumber } from "@/lib/excel/cleaner";
 
 interface CleaningOptionsPanelProps {
@@ -39,6 +40,15 @@ export function CleaningOptionsPanel({
       <p className="mt-1 text-sm text-slate-500">
         Select the operations to apply to the current sheet.
       </p>
+
+      <button
+        type="button"
+        className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-60"
+        disabled={disabled || isProcessing}
+        onClick={() => onChange({ ...STANDARD_CLEANING_OPTIONS })}
+      >
+        Standard Clean
+      </button>
 
       <div className="mt-5 flex flex-col gap-3">
         {OPTION_ITEMS.map((item) => (

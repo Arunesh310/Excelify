@@ -3,8 +3,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { MatchResults } from "@/components/match/MatchResults";
+import { ToolNextSteps } from "@/components/app/ToolNextSteps";
 import { FileUploader } from "@/components/FileUploader";
 import { SheetSelector } from "@/components/WorkbookPreview";
+import { trackToolEvent } from "@/lib/app/analytics";
+import {
+  loadMatchColumnNames,
+  loadPreferredColumn,
+  saveMatchColumnNames,
+} from "@/lib/app/preferences";
+import { loadMatchBaseSample, loadMatchLookupSample } from "@/lib/app/samples";
 import {
   detectDuplicateLookupEntries,
   matchAndBringData,
@@ -159,6 +167,8 @@ export function MatchBringDataApp() {
       const parsed = await parseWorkbookFile(file);
       setBaseMetadata(parsed);
       setBaseSheetName(parsed.sheets[0]?.name ?? "");
+      const stored = loadMatchColumnNames();
+      setBaseKeyColumn(loadPreferredColumn(parsed.sheets[0]?.headers ?? [], stored?.baseKeyColumn ?? null));
     } catch (error) {
       setErrorMessage(
         error instanceof ParseWorkbookError
@@ -183,6 +193,10 @@ export function MatchBringDataApp() {
       const parsed = await parseWorkbookFile(file);
       setLookupMetadata(parsed);
       setLookupSheetName(parsed.sheets[0]?.name ?? "");
+      const stored = loadMatchColumnNames();
+      setLookupKeyColumn(
+        loadPreferredColumn(parsed.sheets[0]?.headers ?? [], stored?.lookupKeyColumn ?? null),
+      );
     } catch (error) {
       setErrorMessage(
         error instanceof ParseWorkbookError
@@ -244,6 +258,8 @@ export function MatchBringDataApp() {
         duplicateBehavior,
       });
       setMatchResult(result);
+      saveMatchColumnNames(baseKeyColumn, lookupKeyColumn);
+      trackToolEvent("match_completed");
     } catch (error) {
       setErrorMessage(
         error instanceof MatchWorkbookError
@@ -274,6 +290,43 @@ export function MatchBringDataApp() {
             Base File
           </h2>
           <FileUploader onFileSelected={handleBaseFile} disabled={loadingBase || isMatching} />
+          <button
+            type="button"
+            className="self-start rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={loadingBase || isMatching}
+            onClick={() => {
+              trackToolEvent("sample_loaded", { tool: "match" });
+              try {
+                const parsedBase = loadMatchBaseSample();
+                const parsedLookup = loadMatchLookupSample();
+                const stored = loadMatchColumnNames();
+                setErrorMessage(null);
+                setMatchResult(null);
+                setBaseMetadata(parsedBase);
+                setBaseSheetName(parsedBase.sheets[0]?.name ?? "");
+                setBaseKeyColumn(
+                  loadPreferredColumn(
+                    parsedBase.sheets[0]?.headers ?? [],
+                    stored?.baseKeyColumn ?? "Order ID",
+                  ) || "Order ID",
+                );
+                setLookupMetadata(parsedLookup);
+                setLookupSheetName(parsedLookup.sheets[0]?.name ?? "");
+                const lookupHeaders = parsedLookup.sheets[0]?.headers ?? [];
+                setLookupKeyColumn(
+                  loadPreferredColumn(
+                    lookupHeaders,
+                    stored?.lookupKeyColumn ?? "Order ID",
+                  ) || "Order ID",
+                );
+                setColumnsToBring(lookupHeaders.filter((header: string) => header !== "Order ID"));
+              } catch {
+                setErrorMessage(PARSE_ERROR_MESSAGES.corrupted_file);
+              }
+            }}
+          >
+            Try with sample files
+          </button>
           {loadingBase && <p className="text-sm text-slate-600">Reading Base File...</p>}
           {baseMetadata && baseSheet && (
             <>
@@ -465,7 +518,12 @@ export function MatchBringDataApp() {
         </div>
       )}
 
-      {matchResult && !isMatching && <MatchResults result={matchResult} />}
+      {matchResult && !isMatching && (
+        <>
+          <MatchResults result={matchResult} />
+          <ToolNextSteps tool="match" />
+        </>
+      )}
     </div>
   );
 }

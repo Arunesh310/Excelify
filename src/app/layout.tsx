@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { defaultMetadata } from "@/lib/seo/metadata";
+import { VercelAnalytics } from "@/components/seo/VercelAnalytics";
 
 import "./globals.css";
 
@@ -20,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-IN">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body className={`${inter.variable} antialiased`}>
+        {children}
+        <VercelAnalytics />
+      </body>
     </html>
   );
 }

@@ -21,6 +21,14 @@ export const DEFAULT_CLEANING_OPTIONS: CleaningOptions = {
   convertNumericText: false,
 };
 
+export const STANDARD_CLEANING_OPTIONS: CleaningOptions = {
+  removeBlankRows: true,
+  trimSpaces: true,
+  removeDuplicateRows: true,
+  removeBlankColumns: false,
+  convertNumericText: false,
+};
+
 export interface CleaningStats {
   originalRows: number;
   finalRows: number;

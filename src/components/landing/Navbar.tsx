@@ -4,6 +4,7 @@ import { ExcelifyLogo } from "@/components/brand/ExcelifyLogo";
 
 const NAV_LINKS = [
   { href: "#features", label: "Features" },
+  { href: "/tools", label: "Tools" },
   { href: "#how-it-works", label: "How It Works" },
   { href: "#use-cases", label: "Use Cases" },
   { href: "#pricing", label: "Pricing" },

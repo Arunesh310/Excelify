@@ -40,7 +40,9 @@ export function StructuredData() {
       "Clean Excel and CSV files",
       "Remove duplicate rows",
       "Remove blank rows and columns",
-      "Trim spreadsheet text",
+      "Compare two Excel files",
+      "Match and bring columns between files",
+      "Calculate ageing from a date column",
       "Browser-based local processing",
     ],
   };

@@ -4,11 +4,13 @@ const FOOTER_LINKS = {
     { label: "Clean Data", href: "/tools/excel-cleaner" },
     { label: "Compare Files", href: "/tools/excel-compare" },
     { label: "Match & Bring Data", href: "/tools/excel-match" },
+    { label: "Ageing", href: "/tools/excel-ageing" },
   ],
   Solutions: [
     { label: "Compare Two Excel Files", href: "/solutions/compare-two-excel-files" },
     { label: "XLOOKUP Between Two Files", href: "/solutions/xlookup-between-two-files" },
     { label: "Remove Duplicates from Excel", href: "/solutions/remove-duplicates-excel" },
+    { label: "Calculate Excel Ageing", href: "/solutions/calculate-excel-ageing" },
   ],
   Product: [
     { label: "Features", href: "#features" },

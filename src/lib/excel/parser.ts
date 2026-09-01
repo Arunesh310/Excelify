@@ -304,6 +304,17 @@ export async function parseWorkbookFile(file: File): Promise<WorkbookMetadata> {
   return parseExcelWorkbook(arrayBuffer, file.name, file.size, fileType);
 }
 
+export function parseCsvText(csv: string, fileName: string): WorkbookMetadata {
+  const bytes = new TextEncoder().encode(csv);
+
+  if (bytes.byteLength === 0) {
+    throw new ParseWorkbookError("empty_file", PARSE_ERROR_MESSAGES.empty_file);
+  }
+
+  const buffer = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+  return parseCsvWorkbook(buffer, fileName, bytes.byteLength);
+}
+
 export function getPreviewRows(
   sheet: { rows: string[][] },
   limit = PREVIEW_ROW_LIMIT,

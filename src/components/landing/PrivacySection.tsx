@@ -13,9 +13,8 @@ export function PrivacySection() {
             Your spreadsheets are your business.
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-[var(--color-text-muted)]">
-            Excelify is designed with privacy in mind. Supported spreadsheet processing can happen
-            directly in your browser, so your files don&apos;t need to be uploaded to a server for
-            those operations.
+            Clean, compare and match spreadsheets in your browser. Files stay on your device — they
+            are not uploaded to Excelify for these tools.
           </p>
 
           <ul className="mt-8 grid gap-4 sm:grid-cols-3">

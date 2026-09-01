@@ -1,10 +1,14 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { ToolNextSteps } from "@/components/app/ToolNextSteps";
 import { CleaningOptionsPanel, CleaningSummary } from "@/components/CleaningPanel";
 import { FileUploader } from "@/components/FileUploader";
 import { SheetPreviewTable, SheetSelector } from "@/components/WorkbookPreview";
+import { loadCleanSample } from "@/lib/app/samples";
+import { loadCleanOptions, saveCleanOptions } from "@/lib/app/preferences";
+import { trackToolEvent } from "@/lib/app/analytics";
 import { cleanWorksheet } from "@/lib/excel/cleaner";
 import {
   DEFAULT_CLEANING_OPTIONS,
@@ -55,6 +59,10 @@ export function CleanDataApp() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  useEffect(() => {
+    setOptions(loadCleanOptions(DEFAULT_CLEANING_OPTIONS));
+  }, []);
+
   const selectedSheet = useMemo(() => {
     if (!metadata) {
       return null;
@@ -73,7 +81,6 @@ export function CleanDataApp() {
     setMetadata(null);
     setSelectedSheetName("");
     setCleanedResult(null);
-    setOptions(DEFAULT_CLEANING_OPTIONS);
 
     try {
       const parsed = await parseWorkbookFile(file);
@@ -111,6 +118,7 @@ export function CleanDataApp() {
     try {
       const result = cleanWorksheet(selectedSheet, options);
       setCleanedResult(result);
+      trackToolEvent("clean_completed");
     } catch {
       setErrorMessage("Something went wrong while cleaning your spreadsheet. Please try again.");
     } finally {
@@ -127,6 +135,7 @@ export function CleanDataApp() {
       { headers: cleanedResult.headers, rows: cleanedResult.rows },
       CLEANED_EXPORT_FILENAME,
     );
+    trackToolEvent("clean_download");
   }, [cleanedResult]);
 
   const previewSheet = cleanedResult
@@ -143,6 +152,25 @@ export function CleanDataApp() {
           Step 1 — Upload
         </h2>
         <FileUploader onFileSelected={handleFileSelected} disabled={isLoading || isProcessing} />
+        <button
+          type="button"
+          className="self-start rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+          disabled={isLoading || isProcessing}
+          onClick={() => {
+            trackToolEvent("sample_loaded", { tool: "clean" });
+            try {
+              const parsed = loadCleanSample();
+              setErrorMessage(null);
+              setCleanedResult(null);
+              setMetadata(parsed);
+              setSelectedSheetName(parsed.sheets[0]?.name ?? "");
+            } catch {
+              setErrorMessage(PARSE_ERROR_MESSAGES.corrupted_file);
+            }
+          }}
+        >
+          Try with sample file
+        </button>
       </section>
 
       <p className="rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
@@ -190,6 +218,7 @@ export function CleanDataApp() {
               options={options}
               onChange={(nextOptions) => {
                 setOptions(nextOptions);
+                saveCleanOptions(nextOptions);
                 setCleanedResult(null);
               }}
               onClean={handleClean}
@@ -222,6 +251,8 @@ export function CleanDataApp() {
               </div>
             </div>
           )}
+
+          <ToolNextSteps tool="clean" />
         </>
       )}
     </div>

@@ -2,9 +2,17 @@
 
 import { useCallback, useMemo, useState } from "react";
 
+import { ToolNextSteps } from "@/components/app/ToolNextSteps";
 import { CompareResults } from "@/components/compare/CompareResults";
 import { FileUploader } from "@/components/FileUploader";
 import { SheetSelector } from "@/components/WorkbookPreview";
+import { trackToolEvent } from "@/lib/app/analytics";
+import {
+  loadCompareColumnNames,
+  loadPreferredColumn,
+  saveCompareColumnNames,
+} from "@/lib/app/preferences";
+import { loadCompareSampleA, loadCompareSampleB } from "@/lib/app/samples";
 import { compareWorksheets } from "@/lib/excel/comparer";
 import { CompareWorkbookError } from "@/lib/excel/comparer-types";
 import { parseWorkbookFile } from "@/lib/excel/parser";
@@ -118,6 +126,9 @@ export function CompareFilesApp() {
       const parsed = await parseWorkbookFile(file);
       setMetadataA(parsed);
       setSheetNameA(parsed.sheets[0]?.name ?? "");
+      const stored = loadCompareColumnNames();
+      const headers = parsed.sheets[0]?.headers ?? [];
+      setColumnA(loadPreferredColumn(headers, stored?.columnA ?? null));
     } catch (error) {
       setErrorMessage(
         error instanceof ParseWorkbookError
@@ -141,6 +152,9 @@ export function CompareFilesApp() {
       const parsed = await parseWorkbookFile(file);
       setMetadataB(parsed);
       setSheetNameB(parsed.sheets[0]?.name ?? "");
+      const stored = loadCompareColumnNames();
+      const headers = parsed.sheets[0]?.headers ?? [];
+      setColumnB(loadPreferredColumn(headers, stored?.columnB ?? null));
     } catch (error) {
       setErrorMessage(
         error instanceof ParseWorkbookError
@@ -175,6 +189,8 @@ export function CompareFilesApp() {
         columnB,
       });
       setCompareResult(result);
+      saveCompareColumnNames(columnA, columnB);
+      trackToolEvent("compare_completed");
     } catch (error) {
       setErrorMessage(
         error instanceof CompareWorkbookError
@@ -196,6 +212,31 @@ export function CompareFilesApp() {
         <section className="flex flex-col gap-4">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">File A</h2>
           <FileUploader onFileSelected={handleFileA} disabled={loadingA || isComparing} />
+          <button
+            type="button"
+            className="self-start rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={loadingA || isComparing}
+            onClick={() => {
+              trackToolEvent("sample_loaded", { tool: "compare" });
+              try {
+                const parsedA = loadCompareSampleA();
+                const parsedB = loadCompareSampleB();
+                const stored = loadCompareColumnNames();
+                setErrorMessage(null);
+                setCompareResult(null);
+                setMetadataA(parsedA);
+                setSheetNameA(parsedA.sheets[0]?.name ?? "");
+                setColumnA(loadPreferredColumn(parsedA.sheets[0]?.headers ?? [], stored?.columnA ?? "ID"));
+                setMetadataB(parsedB);
+                setSheetNameB(parsedB.sheets[0]?.name ?? "");
+                setColumnB(loadPreferredColumn(parsedB.sheets[0]?.headers ?? [], stored?.columnB ?? "ID"));
+              } catch {
+                setErrorMessage(PARSE_ERROR_MESSAGES.corrupted_file);
+              }
+            }}
+          >
+            Try with sample files
+          </button>
           {loadingA && (
             <p className="text-sm text-slate-600">Reading File A...</p>
           )}
@@ -274,7 +315,12 @@ export function CompareFilesApp() {
         </div>
       )}
 
-      {compareResult && !isComparing && <CompareResults result={compareResult} />}
+      {compareResult && !isComparing && (
+        <>
+          <CompareResults result={compareResult} />
+          <ToolNextSteps tool="compare" />
+        </>
+      )}
     </div>
   );
 }

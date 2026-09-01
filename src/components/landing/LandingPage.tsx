@@ -15,6 +15,7 @@ import { Problem } from "@/components/landing/Problem";
 import { ProductPreview } from "@/components/landing/ProductPreview";
 import { TrustBar } from "@/components/landing/TrustBar";
 import { UseCases } from "@/components/landing/UseCases";
+import { WorkflowStrip } from "@/components/landing/WorkflowStrip";
 
 export function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -44,6 +45,7 @@ export function LandingPage() {
         <TrustBar />
         <Problem />
         <Features />
+        <WorkflowStrip />
         <HowItWorks />
         <UseCases />
         <ProductPreview />

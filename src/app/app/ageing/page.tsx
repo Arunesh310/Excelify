@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 import { AppShell } from "@/components/AppShell";
-import { ComingSoonTool } from "@/components/app/ComingSoonTool";
+import { AgeingApp } from "@/components/ageing/AgeingApp";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Calculate Excel Ageing — Coming Soon",
+  title: "Calculate Excel Ageing Online",
   description:
-    "Calculate ageing automatically from a date column with Excelify. Coming soon.",
+    "Calculate ageing in days from a date column in Excel or CSV files. Processed locally in your browser with Excelify.",
   path: "/app/ageing",
 });
 
@@ -17,10 +17,7 @@ export default function AppAgeingPage() {
       title="Ageing"
       subtitle="Calculate ageing automatically from a date column."
     >
-      <ComingSoonTool
-        toolName="Ageing"
-        description="Calculate ageing automatically from a date column."
-      />
+      <AgeingApp />
     </AppShell>
   );
 }

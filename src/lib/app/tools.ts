@@ -57,6 +57,14 @@ export const APP_TOOLS: AppTool[] = [
     keywords: ["match", "bring", "xlookup", "vlookup", "lookup", "join", "merge", "index"],
     popular: true,
   },
+  {
+    id: "ageing",
+    title: "Ageing",
+    description: "Calculate ageing in days from a date column.",
+    href: "/app/ageing",
+    categoryId: "data-cleaning",
+    keywords: ["ageing", "aging", "date", "invoice", "overdue", "days", "outstanding"],
+  },
 ];
 
 export const POPULAR_TOOLS = APP_TOOLS.filter((tool) => tool.popular);

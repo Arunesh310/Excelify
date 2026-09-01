@@ -119,6 +119,50 @@ export const SEO_TOOL_PAGES: SeoToolPageDefinition[] = [
     sitemapChangeFrequency: "weekly",
   },
   {
+    path: "/tools/excel-ageing",
+    title: "Excel Ageing Calculator — Days from a Date Column",
+    description:
+      "Calculate ageing in days from a date column in Excel or CSV files. A simple browser-based ageing calculator for invoices and outstanding records.",
+    h1: "Excel Ageing Calculator",
+    appHref: "/app/ageing",
+    ctaLabel: "Open Ageing Tool",
+    breadcrumbs: [
+      { label: "Home", href: "/" },
+      { label: "Tools", href: "/tools" },
+      { label: "Ageing" },
+    ],
+    relatedLinks: [
+      {
+        href: "/tools/excel-cleaner",
+        label: "Excel Cleaner",
+        description: "Clean date columns and duplicates before calculating ageing.",
+      },
+      {
+        href: "/tools/excel-compare",
+        label: "Compare Excel Files",
+        description: "Compare aged records against another export.",
+      },
+      {
+        href: "/solutions/calculate-excel-ageing",
+        label: "Calculate Excel Ageing",
+        description: "Guide to calculating days outstanding from a date column.",
+      },
+    ],
+    intro:
+      "Operations and finance teams often need to know how old a date is — invoices, GRNs, or tickets. Excelify calculates ageing in days from a date column without formulas.",
+    sections: [
+      {
+        heading: "How ageing works",
+        paragraphs: [
+          "Upload an Excel or CSV file, choose the date column, and Excelify adds an Ageing (Days) column based on today's date.",
+          "Preview the result and download a workbook. Processing stays in your browser.",
+        ],
+      },
+    ],
+    sitemapPriority: 0.75,
+    sitemapChangeFrequency: "weekly",
+  },
+  {
     path: "/tools/excel-compare",
     title: "Compare Excel Files Online — Find Differences Between Spreadsheets",
     description:
@@ -374,6 +418,49 @@ export const SEO_SOLUTION_PAGES: SeoSolutionPageDefinition[] = [
     sitemapPriority: 0.75,
     sitemapChangeFrequency: "monthly",
   },
+  {
+    path: "/solutions/calculate-excel-ageing",
+    title: "Calculate Excel Ageing from a Date Column",
+    description:
+      "Calculate ageing or days outstanding in Excel without formulas. Use Excelify to add ageing in days from any date column, in your browser.",
+    h1: "Calculate Excel Ageing Online",
+    appHref: "/app/ageing",
+    ctaLabel: "Calculate Ageing Now",
+    breadcrumbs: [
+      { label: "Home", href: "/" },
+      { label: "Solutions", href: "/solutions" },
+      { label: "Calculate Excel Ageing" },
+    ],
+    relatedLinks: [
+      {
+        href: "/tools/excel-cleaner",
+        label: "Excel Cleaner",
+        description: "Clean the file before calculating ageing.",
+      },
+      {
+        href: "/tools/excel-compare",
+        label: "Compare Excel Files",
+        description: "Compare aged lists between two exports.",
+      },
+      {
+        href: "/tools/excel-ageing",
+        label: "Ageing Tool",
+        description: "Full overview of Excelify's ageing calculator.",
+      },
+    ],
+    intro:
+      "Ageing tells you how many days have passed since a date — useful for invoices, shipments, and follow-ups. Excelify adds that column for you.",
+    sections: [
+      {
+        heading: "Skip the datedif formulas",
+        paragraphs: [
+          "Pick the date column, calculate ageing, and download the file. Invalid dates are left blank so you can review them.",
+        ],
+      },
+    ],
+    sitemapPriority: 0.7,
+    sitemapChangeFrequency: "monthly",
+  },
 ];
 
 export const TOOL_HUB_CARDS = [
@@ -395,6 +482,12 @@ export const TOOL_HUB_CARDS = [
     title: "Match & Bring Data",
     description: "Match two spreadsheets and bring selected columns into your base file.",
   },
+  {
+    href: "/tools/excel-ageing",
+    appHref: "/app/ageing",
+    title: "Ageing",
+    description: "Calculate ageing in days from a date column.",
+  },
 ] as const;
 
 export const SOLUTION_HUB_CARDS = [
@@ -413,6 +506,11 @@ export const SOLUTION_HUB_CARDS = [
     title: "Remove Duplicates from Excel",
     description: "Remove duplicate rows and clean spreadsheet data.",
   },
+  {
+    href: "/solutions/calculate-excel-ageing",
+    title: "Calculate Excel Ageing",
+    description: "Add days outstanding from a date column.",
+  },
 ] as const;
 
 export function getPublicSitemapEntries(): Array<{
@@ -421,7 +519,7 @@ export function getPublicSitemapEntries(): Array<{
   changeFrequency: "weekly" | "monthly";
   priority: number;
 }> {
-  const lastModified = new Date("2026-08-29");
+  const lastModified = new Date("2026-09-01");
   const homepage = {
     url: SITE_URL,
     lastModified,

@@ -1,8 +1,10 @@
 import Link from "next/link";
 
 const BETA_FEATURES = [
-  "Excel & CSV tools",
   "Clean Data",
+  "Compare Files",
+  "Match & Bring Data",
+  "Ageing",
   "Browser-based processing",
   "No credit card required",
 ] as const;
