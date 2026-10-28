@@ -21,7 +21,9 @@ export type ParseErrorCode =
   | "empty_file"
   | "corrupted_file"
   | "no_sheets"
-  | "no_usable_data";
+  | "no_usable_data"
+  | "file_too_large"
+  | "row_limit_exceeded";
 
 export class ParseWorkbookError extends Error {
   readonly code: ParseErrorCode;
@@ -41,4 +43,8 @@ export const PARSE_ERROR_MESSAGES: Record<ParseErrorCode, string> = {
     "We couldn't read this file. Please check that it is a valid Excel or CSV file.",
   no_sheets: "This workbook does not contain any sheets.",
   no_usable_data: "The selected sheet does not contain any usable data.",
+  file_too_large:
+    "This file is too large to process in your browser. Try a smaller export or remove unused columns.",
+  row_limit_exceeded:
+    "This sheet has too many rows to process safely in your browser. Split the file or filter rows first.",
 };

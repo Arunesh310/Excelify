@@ -1,6 +1,10 @@
 import * as XLSX from "xlsx";
 
 import {
+  assertFileSizeWithinLimit,
+  assertRowCountWithinLimit,
+} from "./limits";
+import {
   PARSE_ERROR_MESSAGES,
   ParseWorkbookError,
   type ParsedSheet,
@@ -193,6 +197,8 @@ function parseSheet(worksheet: XLSX.WorkSheet, sheetName: string): ParsedSheet |
     return null;
   }
 
+  assertRowCountWithinLimit(normalizedRows.length, sheetName);
+
   return {
     name: sheetName,
     headers,
@@ -281,6 +287,8 @@ export async function parseWorkbookFile(file: File): Promise<WorkbookMetadata> {
     throw new ParseWorkbookError("empty_file", PARSE_ERROR_MESSAGES.empty_file);
   }
 
+  assertFileSizeWithinLimit(file.size, "upload");
+
   const extension = getFileExtension(file.name);
 
   if (!SUPPORTED_EXTENSIONS.has(extension)) {
@@ -297,6 +305,8 @@ export async function parseWorkbookFile(file: File): Promise<WorkbookMetadata> {
     throw new ParseWorkbookError("empty_file", PARSE_ERROR_MESSAGES.empty_file);
   }
 
+  assertFileSizeWithinLimit(arrayBuffer.byteLength, "buffer");
+
   if (fileType === "csv") {
     return parseCsvWorkbook(arrayBuffer, file.name, file.size);
   }
@@ -310,6 +320,8 @@ export function parseCsvText(csv: string, fileName: string): WorkbookMetadata {
   if (bytes.byteLength === 0) {
     throw new ParseWorkbookError("empty_file", PARSE_ERROR_MESSAGES.empty_file);
   }
+
+  assertFileSizeWithinLimit(bytes.byteLength, "buffer");
 
   const buffer = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
   return parseCsvWorkbook(buffer, fileName, bytes.byteLength);

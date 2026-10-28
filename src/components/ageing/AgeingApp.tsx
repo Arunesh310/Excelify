@@ -10,7 +10,7 @@ import { loadAgeingDateColumn, loadPreferredColumn, saveAgeingDateColumn } from 
 import { loadAgeingSample } from "@/lib/app/samples";
 import { calculateAgeing } from "@/lib/excel/ageing";
 import { AGEING_EXPORT_FILENAME, type AgeingResult } from "@/lib/excel/ageing-types";
-import { exportWorksheetToXlsx } from "@/lib/excel/export";
+import { WorksheetExportButtons } from "@/components/app/WorksheetExportButtons";
 import { parseWorkbookFile } from "@/lib/excel/parser";
 import {
   PARSE_ERROR_MESSAGES,
@@ -218,18 +218,12 @@ export function AgeingApp() {
             title="Ageing Preview"
           />
 
-          <div>
-            <button
-              type="button"
-              className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
-              onClick={() => {
-                exportWorksheetToXlsx(result, AGEING_EXPORT_FILENAME, "Ageing");
-                trackToolEvent("ageing_download");
-              }}
-            >
-              Download Excel
-            </button>
-          </div>
+          <WorksheetExportButtons
+            worksheet={result}
+            xlsxFileName={AGEING_EXPORT_FILENAME}
+            sheetName="Ageing"
+            onExported={() => trackToolEvent("ageing_download")}
+          />
 
           <ToolNextSteps tool="ageing" />
         </>

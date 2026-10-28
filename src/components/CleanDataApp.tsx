@@ -15,7 +15,8 @@ import {
   type CleanedWorksheet,
   type CleaningOptions,
 } from "@/lib/excel/cleaner-types";
-import { CLEANED_EXPORT_FILENAME, exportWorksheetToXlsx } from "@/lib/excel/export";
+import { WorksheetExportButtons } from "@/components/app/WorksheetExportButtons";
+import { CLEANED_EXPORT_FILENAME } from "@/lib/excel/export";
 import { parseWorkbookFile } from "@/lib/excel/parser";
 import {
   PARSE_ERROR_MESSAGES,
@@ -126,18 +127,6 @@ export function CleanDataApp() {
     }
   }, [options, selectedSheet]);
 
-  const handleDownload = useCallback(() => {
-    if (!cleanedResult) {
-      return;
-    }
-
-    exportWorksheetToXlsx(
-      { headers: cleanedResult.headers, rows: cleanedResult.rows },
-      CLEANED_EXPORT_FILENAME,
-    );
-    trackToolEvent("clean_download");
-  }, [cleanedResult]);
-
   const previewSheet = cleanedResult
     ? {
         headers: cleanedResult.headers,
@@ -240,15 +229,16 @@ export function CleanDataApp() {
           {previewSheet && (
             <div className="flex flex-col gap-4">
               <SheetPreviewTable sheet={previewSheet} title="Cleaned Preview" />
-              <div>
-                <button
-                  type="button"
-                  className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
-                  onClick={handleDownload}
-                >
-                  Download Cleaned Excel
-                </button>
-              </div>
+              <WorksheetExportButtons
+                worksheet={{
+                  headers: cleanedResult.headers,
+                  rows: cleanedResult.rows,
+                }}
+                xlsxFileName={CLEANED_EXPORT_FILENAME}
+                sheetName="Cleaned Data"
+                primaryLabel="Download Cleaned Excel"
+                onExported={() => trackToolEvent("clean_download")}
+              />
             </div>
           )}
 

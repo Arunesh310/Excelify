@@ -2,6 +2,9 @@
 
 import { useCallback, useRef, useState } from "react";
 
+import { assertFileSizeWithinLimit, MAX_FILE_SIZE_LABEL } from "@/lib/excel/limits";
+import { ParseWorkbookError } from "@/lib/excel/types";
+
 const ACCEPTED_EXTENSIONS = [".xlsx", ".xls", ".csv"];
 
 interface FileUploaderProps {
@@ -12,12 +15,26 @@ interface FileUploaderProps {
 export function FileUploader({ onFileSelected, disabled = false }: FileUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [sizeError, setSizeError] = useState<string | null>(null);
 
   const handleFile = useCallback(
     (file: File | undefined) => {
       if (!file || disabled) {
         return;
       }
+
+      setSizeError(null);
+
+      try {
+        assertFileSizeWithinLimit(file.size, "upload");
+      } catch (error) {
+        if (error instanceof ParseWorkbookError) {
+          setSizeError(error.message);
+          return;
+        }
+        throw error;
+      }
+
       onFileSelected(file);
     },
     [disabled, onFileSelected],
@@ -107,8 +124,14 @@ export function FileUploader({ onFileSelected, disabled = false }: FileUploaderP
       </button>
 
       <p className="mt-5 text-xs uppercase tracking-wide text-slate-400">
-        Supported formats: .xlsx .xls .csv
+        Supported formats: .xlsx .xls .csv · Max size {MAX_FILE_SIZE_LABEL}
       </p>
+
+      {sizeError && (
+        <p className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {sizeError}
+        </p>
+      )}
     </div>
   );
 }

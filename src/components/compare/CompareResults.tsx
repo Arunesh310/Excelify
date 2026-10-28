@@ -8,6 +8,7 @@ import {
   type CompareResultTab,
 } from "@/lib/excel/comparer-types";
 import { formatCompareStat } from "@/lib/excel/comparer";
+import { WorksheetExportButtons } from "@/components/app/WorksheetExportButtons";
 import { exportWorksheetToXlsx } from "@/lib/excel/export";
 import { PREVIEW_ROW_LIMIT } from "@/lib/excel/parser";
 
@@ -145,14 +146,16 @@ export function CompareResults({ result }: CompareResultsProps) {
           </div>
         )}
 
-        <button
-          type="button"
-          onClick={() => handleDownload(activeTab)}
-          disabled={activeTable.totalRows === 0}
-          className="mt-4 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          Download {TABS.find((tab) => tab.id === activeTab)?.label}
-        </button>
+        <div className="mt-4">
+          <WorksheetExportButtons
+            worksheet={{ headers: activeTable.headers, rows: activeTable.rows }}
+            xlsxFileName={COMPARE_EXPORT_FILENAMES[activeTab]}
+            sheetName={TABS.find((tab) => tab.id === activeTab)?.label ?? "Results"}
+            disabled={activeTable.totalRows === 0}
+            primaryLabel={`Download ${TABS.find((tab) => tab.id === activeTab)?.label} (Excel)`}
+            csvLabel={`Download ${TABS.find((tab) => tab.id === activeTab)?.label} (CSV)`}
+          />
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-3">

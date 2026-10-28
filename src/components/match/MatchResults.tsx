@@ -6,7 +6,7 @@ import {
   type MatchResult,
 } from "@/lib/excel/matcher-types";
 import { formatMatchStat } from "@/lib/excel/matcher";
-import { exportWorksheetToXlsx } from "@/lib/excel/export";
+import { WorksheetExportButtons } from "@/components/app/WorksheetExportButtons";
 import { PREVIEW_ROW_LIMIT } from "@/lib/excel/parser";
 
 interface MatchResultsProps {
@@ -24,22 +24,6 @@ function SummaryItem({ label, value }: { label: string; value: string }) {
 
 export function MatchResults({ result }: MatchResultsProps) {
   const previewRows = result.result.rows.slice(0, PREVIEW_ROW_LIMIT);
-
-  const handleDownloadMatched = () => {
-    exportWorksheetToXlsx(
-      { headers: result.result.headers, rows: result.result.rows },
-      MATCH_EXPORT_FILENAMES.matched,
-      "Matched Data",
-    );
-  };
-
-  const handleDownloadNotFound = () => {
-    exportWorksheetToXlsx(
-      { headers: result.notFoundRows.headers, rows: result.notFoundRows.rows },
-      MATCH_EXPORT_FILENAMES.notFound,
-      "Not Found",
-    );
-  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -119,23 +103,30 @@ export function MatchResults({ result }: MatchResultsProps) {
           </table>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={handleDownloadMatched}
-            className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
-          >
-            Download Excel
-          </button>
-          <button
-            type="button"
-            onClick={handleDownloadNotFound}
-            disabled={result.notFoundRows.totalRows === 0}
-            className="rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            Download Not Found
-          </button>
-        </div>
+        <WorksheetExportButtons
+          worksheet={{
+            headers: result.result.headers,
+            rows: result.result.rows,
+          }}
+          xlsxFileName={MATCH_EXPORT_FILENAMES.matched}
+          sheetName="Matched Data"
+        />
+
+        {result.notFoundRows.totalRows > 0 && (
+          <div className="mt-4 border-t border-slate-100 pt-4">
+            <p className="mb-3 text-sm font-medium text-slate-700">Not found rows</p>
+            <WorksheetExportButtons
+              worksheet={{
+                headers: result.notFoundRows.headers,
+                rows: result.notFoundRows.rows,
+              }}
+              xlsxFileName={MATCH_EXPORT_FILENAMES.notFound}
+              sheetName="Not Found"
+              primaryLabel="Download Not Found (Excel)"
+              csvLabel="Download Not Found (CSV)"
+            />
+          </div>
+        )}
       </section>
     </div>
   );
