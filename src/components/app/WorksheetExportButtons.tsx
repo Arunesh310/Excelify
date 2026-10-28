@@ -35,7 +35,7 @@ export function WorksheetExportButtons({
           exportWorksheetToXlsx(worksheet, xlsxFileName, sheetName);
           onExported?.("xlsx");
         }}
-        className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="cursor-pointer rounded-lg bg-[var(--color-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition duration-[var(--transition-fast)] hover:bg-[var(--color-primary-hover)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {primaryLabel}
       </button>
@@ -46,7 +46,7 @@ export function WorksheetExportButtons({
           exportWorksheetToCsv(worksheet, csvFileNameFromXlsx(xlsxFileName));
           onExported?.("csv");
         }}
-        className="rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+        className="cursor-pointer rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text-muted)] transition duration-[var(--transition-fast)] hover:bg-[var(--color-surface-muted)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {csvLabel}
       </button>

@@ -1,33 +1,44 @@
 import Link from "next/link";
 
+import {
+  AgeingFeatureIcon,
+  CleanFeatureIcon,
+  CompareFeatureIcon,
+  MatchFeatureIcon,
+} from "@/components/landing/FeatureIcons";
+
 const FEATURES = [
   {
     title: "Clean Data",
-    description: "Remove duplicates, blank rows and unwanted spaces in seconds.",
+    description: "Remove duplicates, blank rows and extra spaces before you match or compare.",
     href: "/app/clean",
-    cta: "Open Clean Data →",
+    cta: "Open Clean Data",
+    Icon: CleanFeatureIcon,
     comingSoon: false,
   },
   {
     title: "Compare Files",
-    description: "Find matching, missing and duplicate records between two spreadsheets.",
+    description: "Find matching, missing, and duplicate records between two exports.",
     href: "/app/compare",
-    cta: "Open Compare Files →",
+    cta: "Open Compare Files",
+    Icon: CompareFeatureIcon,
     comingSoon: false,
   },
   {
     title: "Match & Bring Data",
     description:
-      "Match two spreadsheets and bring selected columns into your base file — without XLOOKUP formulas.",
+      "Pull columns from a lookup file into your base sheet — no XLOOKUP setup required.",
     href: "/app/match",
-    cta: "Open Match & Bring →",
+    cta: "Open Match & Bring",
+    Icon: MatchFeatureIcon,
     comingSoon: false,
   },
   {
     title: "Ageing",
-    description: "Calculate ageing from any date column automatically.",
+    description: "Calculate days outstanding from invoice or due dates in one step.",
     href: "/app/ageing",
-    cta: "Open Ageing →",
+    cta: "Open Ageing",
+    Icon: AgeingFeatureIcon,
     comingSoon: false,
   },
 ] as const;
@@ -38,35 +49,31 @@ export function Features() {
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-[var(--color-text)] md:text-4xl">
-            Your everyday Excel toolkit.
+            Tools that follow a reconciliation workflow
           </h2>
+          <p className="mt-4 text-[var(--color-text-muted)]">
+            Each tool stands alone, but they chain together for the jobs you repeat every week.
+          </p>
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2">
           {FEATURES.map((feature) => (
             <article
               key={feature.title}
-              className="group flex flex-col rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] transition hover:shadow-[var(--shadow-md)]"
+              className="group flex cursor-default flex-col rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition duration-[var(--transition-fast)] hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-sm)]"
             >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-xl font-semibold text-[var(--color-text)]">{feature.title}</h3>
-                {feature.comingSoon && (
-                  <span className="shrink-0 rounded-full bg-[var(--color-surface-muted)] px-2.5 py-0.5 text-xs font-medium text-[var(--color-text-muted)]">
-                    Coming soon
-                  </span>
-                )}
+              <div className="flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-primary-light)]">
+                <feature.Icon />
               </div>
+              <h3 className="mt-4 text-xl font-semibold text-[var(--color-text)]">{feature.title}</h3>
               <p className="mt-3 flex-1 text-[var(--color-text-muted)]">{feature.description}</p>
-              {feature.comingSoon ? (
-                <span className="mt-5 text-sm font-semibold text-[var(--color-text-subtle)]">
-                  {feature.cta}
-                </span>
-              ) : (
+              {!feature.comingSoon && (
                 <Link
                   href={feature.href}
-                  className="mt-5 text-sm font-semibold text-[var(--color-primary)] transition hover:text-[var(--color-primary-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+                  className="mt-5 inline-flex cursor-pointer items-center gap-1 text-sm font-semibold text-[var(--color-primary)] transition duration-[var(--transition-fast)] hover:text-[var(--color-primary-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ring)]"
                 >
                   {feature.cta}
+                  <span aria-hidden="true">→</span>
                 </Link>
               )}
             </article>

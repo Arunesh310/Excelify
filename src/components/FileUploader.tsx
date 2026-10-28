@@ -55,8 +55,8 @@ export function FileUploader({ onFileSelected, disabled = false }: FileUploaderP
     <div
       className={`rounded-2xl border-2 border-dashed p-10 text-center transition-colors ${
         isDragging
-          ? "border-emerald-500 bg-emerald-50"
-          : "border-slate-200 bg-white hover:border-emerald-300"
+          ? "border-[var(--color-primary)] bg-[var(--color-primary-light)]"
+          : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-border-strong)]"
       } ${disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}
       onClick={() => !disabled && inputRef.current?.click()}
       onDragEnter={(event) => {
@@ -89,7 +89,7 @@ export function FileUploader({ onFileSelected, disabled = false }: FileUploaderP
         onChange={handleInputChange}
       />
 
-      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-primary-light)] text-[var(--color-primary-hover)]">
         <svg
           aria-hidden="true"
           className="h-7 w-7"
@@ -106,14 +106,14 @@ export function FileUploader({ onFileSelected, disabled = false }: FileUploaderP
         </svg>
       </div>
 
-      <p className="text-lg font-medium text-slate-900">
+      <p className="text-lg font-medium text-[var(--color-text)]">
         Drop your Excel or CSV file here
       </p>
-      <p className="mt-2 text-sm text-slate-500">or click to browse from your computer</p>
+      <p className="mt-2 text-sm text-[var(--color-text-muted)]">or click to browse from your computer</p>
 
       <button
         type="button"
-        className="mt-6 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-6 cursor-pointer rounded-lg bg-[var(--color-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition duration-[var(--transition-fast)] hover:bg-[var(--color-primary-hover)] disabled:cursor-not-allowed disabled:opacity-60"
         disabled={disabled}
         onClick={(event) => {
           event.stopPropagation();
@@ -123,7 +123,7 @@ export function FileUploader({ onFileSelected, disabled = false }: FileUploaderP
         Browse Files
       </button>
 
-      <p className="mt-5 text-xs uppercase tracking-wide text-slate-400">
+      <p className="mt-5 text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
         Supported formats: .xlsx .xls .csv · Max size {MAX_FILE_SIZE_LABEL}
       </p>
 

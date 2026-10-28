@@ -35,15 +35,15 @@ function NavLink({
     <Link
       href={item.href}
       onClick={onNavigate}
-      className={`block rounded-lg px-3 py-2.5 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 ${
+      className={`block cursor-pointer rounded-lg px-3 py-2.5 transition duration-[var(--transition-fast)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ring)] ${
         isActive
-          ? "bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200"
-          : "text-slate-700 hover:bg-slate-50"
+          ? "bg-[var(--color-primary-light)] text-[var(--color-text)] ring-1 ring-[var(--color-primary-muted)]"
+          : "text-[var(--color-text-muted)] hover:bg-[var(--color-surface-muted)]"
       }`}
     >
       <p className="text-sm font-semibold">{item.label}</p>
       {item.description && (
-        <p className="mt-0.5 text-xs text-slate-500">{item.description}</p>
+        <p className="mt-0.5 text-xs text-[var(--color-text-subtle)]">{item.description}</p>
       )}
     </Link>
   );
@@ -59,14 +59,14 @@ function SidebarNav({
   return (
     <nav className="flex flex-col gap-6" aria-label="Application navigation">
       <div>
-        <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-subtle)]">
           Main
         </p>
         <NavLink item={HOME_NAV} pathname={pathname} onNavigate={onNavigate} />
       </div>
 
       <div>
-        <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-subtle)]">
           Tools
         </p>
         <div className="flex flex-col gap-1">
@@ -82,7 +82,7 @@ function SidebarNav({
       </div>
 
       <div>
-        <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-subtle)]">
           Other
         </p>
         <NavLink item={ALL_TOOLS_NAV} pathname={pathname} onNavigate={onNavigate} />
@@ -118,18 +118,18 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
   }, [mobileMenuOpen]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="app-shell-bg min-h-screen">
       <div className="mx-auto flex min-h-screen max-w-7xl">
-        <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white/80 px-4 py-6 md:block">
+        <aside className="hidden w-64 shrink-0 border-r border-[var(--color-border)] bg-[var(--color-surface)]/90 px-4 py-6 md:block">
           <div className="mb-8 px-2">
             <Link
               href="/"
-              className="group inline-flex flex-col focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              className="group inline-flex flex-col focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ring)]"
               aria-label="Go to Excelify homepage"
             >
               <ExcelifyLogo href="" variant="full" priority />
-              <p className="mt-2 text-xs text-slate-500 transition group-hover:text-slate-700">
-                Work smarter with Excel.
+              <p className="mt-2 text-xs text-[var(--color-text-subtle)] transition group-hover:text-[var(--color-text-muted)]">
+                Reconcile in your browser.
               </p>
             </Link>
           </div>
@@ -138,21 +138,21 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="border-b border-slate-200 bg-white/80 px-4 py-4 backdrop-blur sm:px-6">
+          <header className="border-b border-[var(--color-border)] bg-[var(--color-surface)]/90 px-4 py-4 backdrop-blur sm:px-6">
             <div className="flex items-center justify-between gap-4">
               <Link
                 href="/"
-                className="flex items-center gap-3 md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                className="flex items-center gap-3 md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ring)]"
                 aria-label="Go to Excelify homepage"
               >
                 <ExcelifyLogo href="" variant="icon" />
-                <span className="text-sm font-semibold text-slate-900">Excelify</span>
+                <span className="text-sm font-semibold text-[var(--color-text)]">Excelify</span>
               </Link>
 
               <div className="hidden md:block">
                 <Link
                   href="/"
-                  className="text-sm font-semibold text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  className="text-sm font-semibold text-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ring)]"
                 >
                   Excelify
                 </Link>
@@ -161,14 +161,14 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
               <div className="flex items-center gap-2">
                 <Link
                   href="/#faq"
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition duration-[var(--transition-fast)] hover:bg-[var(--color-surface-muted)] hover:text-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ring)]"
                 >
                   Help
                 </Link>
 
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 p-2 text-slate-700 md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-[var(--color-border)] p-2 text-[var(--color-text-muted)] md:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ring)]"
                   aria-expanded={mobileMenuOpen}
                   aria-controls="app-mobile-menu"
                   aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
@@ -186,12 +186,12 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
             </div>
 
             {showPageHeader && (
-              <div className="mt-4 border-t border-slate-100 pt-4">
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+              <div className="mt-4 border-t border-[var(--color-border)] pt-4">
+                <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text)] md:text-3xl">
                   {title}
                 </h1>
                 {subtitle && (
-                  <p className="mt-1 text-sm text-slate-600 md:text-base">{subtitle}</p>
+                  <p className="mt-1 text-sm text-[var(--color-text-muted)] md:text-base">{subtitle}</p>
                 )}
               </div>
             )}
@@ -201,19 +201,19 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
             <>
               <button
                 type="button"
-                className="fixed inset-0 z-40 bg-slate-900/20 md:hidden"
+                className="fixed inset-0 z-40 bg-[var(--color-text)]/20 md:hidden"
                 aria-label="Close navigation menu"
                 onClick={closeMobileMenu}
               />
               <div
                 id="app-mobile-menu"
-                className="fixed inset-y-0 left-0 z-50 w-72 border-r border-slate-200 bg-white p-4 shadow-xl md:hidden"
+                className="fixed inset-y-0 left-0 z-50 w-72 border-r border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-lg)] md:hidden"
               >
                 <div className="mb-6 flex items-center justify-between">
                   <ExcelifyLogo href="/" variant="full" />
                   <button
                     type="button"
-                    className="rounded-lg border border-slate-200 p-2 text-slate-700"
+                    className="cursor-pointer rounded-lg border border-[var(--color-border)] p-2 text-[var(--color-text-muted)]"
                     aria-label="Close menu"
                     onClick={closeMobileMenu}
                   >

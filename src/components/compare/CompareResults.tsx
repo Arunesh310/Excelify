@@ -90,8 +90,8 @@ export function CompareResults({ result }: CompareResultsProps) {
             onClick={() => setActiveTab(tab.id)}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               activeTab === tab.id
-                ? "bg-emerald-600 text-white"
-                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                ? "bg-[var(--color-primary)] text-[var(--color-on-primary)]"
+                : "bg-[var(--color-surface-muted)] text-[var(--color-text-muted)] hover:bg-[var(--color-primary-light)]"
             }`}
           >
             {tab.label}

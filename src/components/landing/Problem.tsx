@@ -27,9 +27,20 @@ export function Problem() {
               key={problem}
               className="flex items-start gap-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-text-muted)]"
             >
-              <span className="mt-0.5 text-[var(--color-primary)]" aria-hidden="true">
-                •
-              </span>
+              <svg
+                className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-primary)]"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 8.5l2.5 2.5 5.5-5.5"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
               {problem}
             </li>
           ))}
