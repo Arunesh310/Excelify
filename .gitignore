@@ -37,3 +37,7 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# Local experiments — not part of Excelify
+/replica/
+/splitfair/
